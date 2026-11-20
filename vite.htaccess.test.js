@@ -1,12 +1,17 @@
 import { describe, it, expect } from 'vitest';
-import { normalizarAdminBase, origemSupabase, preencherHtaccess } from './vite.htaccess.js';
+import {
+  exigirCaminhoSecreto,
+  normalizarAdminBase,
+  origemSupabase,
+  preencherHtaccess,
+} from './vite.htaccess.js';
 
 describe('normalizarAdminBase', () => {
   it('garante barra no início e no fim', () => {
-    expect(normalizarAdminBase('painel-x7k2q')).toBe('/painel-x7k2q/');
-    expect(normalizarAdminBase('/painel-x7k2q')).toBe('/painel-x7k2q/');
-    expect(normalizarAdminBase('painel-x7k2q/')).toBe('/painel-x7k2q/');
-    expect(normalizarAdminBase(' /painel-x7k2q/ ')).toBe('/painel-x7k2q/');
+    expect(normalizarAdminBase('painel-exemplo')).toBe('/painel-exemplo/');
+    expect(normalizarAdminBase('/painel-exemplo')).toBe('/painel-exemplo/');
+    expect(normalizarAdminBase('painel-exemplo/')).toBe('/painel-exemplo/');
+    expect(normalizarAdminBase(' /painel-exemplo/ ')).toBe('/painel-exemplo/');
     expect(normalizarAdminBase('/a/b/')).toBe('/a/b/');
   });
 
@@ -48,5 +53,22 @@ describe('preencherHtaccess', () => {
       },
     );
     expect(saida).toBe('a https://x.supabase.co b https://x.supabase.co c /p/index.html');
+  });
+});
+
+describe('exigirCaminhoSecreto', () => {
+  it('recusa os caminhos de exemplo que estão no repositório público', () => {
+    expect(() => exigirCaminhoSecreto('/painel-exemplo/')).toThrow(/exemplo público/);
+    expect(() => exigirCaminhoSecreto('/Painel-X7K2Q/')).toThrow(/exemplo público/);
+    expect(() => exigirCaminhoSecreto('/admin/')).toThrow(/exemplo público/);
+    expect(() => exigirCaminhoSecreto('/<seu-caminho-secreto>/')).toThrow(/exemplo público/);
+  });
+
+  it('recusa caminhos curtos demais para serem secretos', () => {
+    expect(() => exigirCaminhoSecreto('/adm-abc/')).toThrow(/curto demais/);
+  });
+
+  it('aceita um caminho longo e aleatório', () => {
+    expect(exigirCaminhoSecreto('/adm-q8z3m1v7k2/')).toBe('/adm-q8z3m1v7k2/');
   });
 });

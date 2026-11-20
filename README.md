@@ -27,7 +27,7 @@ cp .env.example .env.local   # ajuste as variáveis se necessário
 Variáveis de ambiente (veja `.env.example`):
 
 - `VITE_FUNCTIONS_URL` — URL base das Edge Functions.
-- `VITE_ADMIN_BASE` — caminho do painel admin (ex.: `/painel-x7k2q/`).
+- `VITE_ADMIN_BASE` — caminho do painel admin (ex.: `/painel-exemplo/`).
 
 ## Desenvolvimento
 
@@ -58,7 +58,7 @@ npm run format
 npm run build:loja    # gera dist/loja
 npm run build:admin   # gera dist/admin
 npm run build         # os dois
-npm run verificar     # lint + testes + os dois builds (precisa do .env.production)
+npm run verificar     # segredos + lint + testes + os dois builds (com valores fictícios de .env.verificacao)
 ```
 
 Cada config do Vite (`vite.loja.config.js`, `vite.admin.config.js`) usa seu HTML de entrada
@@ -110,7 +110,7 @@ administração (abaixo).
 Variáveis locais ficam em `supabase/functions/.env` (ignorado pelo git; modelo em
 `supabase/functions/.env.example`): `ALLOWED_ORIGINS` (origens CORS, separadas por vírgula) e
 `PUBLIC_SUPABASE_URL` (URL do Supabase acessível pelo navegador, usada nas URLs públicas de fotos) e
-`ADMIN_URL` (endereço do painel, sem barra no final; o link de recuperação de senha aponta para `ADMIN_URL/nova-senha`; local: `http://localhost:5174/painel-x7k2q`).
+`ADMIN_URL` (endereço do painel, sem barra no final; o link de recuperação de senha aponta para `ADMIN_URL/nova-senha`; local: `http://localhost:5174/painel-exemplo`).
 O gateway local (Kong) devolve `Access-Control-Allow-Origin: *` por conta própria; a regra real de
 CORS da função é testada em `supabase/functions/_shared/infra/http.test.js`.
 
@@ -231,6 +231,29 @@ A loja e o painel têm uma **Política de Privacidade e Cookies** e um aviso na 
 > Este texto é um modelo e não substitui orientação jurídica. **Revise-o com um advogado** antes de
 > divulgar o site e ajuste-o à realidade da empresa (por exemplo, prazos de guarda e base legal).
 
+## Segurança do repositório (ele é público)
+
+Nada real fica no código: chaves e URLs do Supabase ficam em `.env.production` e nos secrets das
+funções; telefone, e-mail, endereço, CNPJ e logo da empresa são cadastrados **no painel admin** e
+ficam no banco. Os arquivos versionados só têm valores fictícios.
+
+Para não vazar nada por engano, todo `git commit` passa pelo hook `.githooks/pre-commit`
+(instalado automaticamente pelo `npm install`; ou rode `git config core.hooksPath .githooks`), que
+roda `scripts/verificar-segredos.mjs` e **bloqueia o commit** se encontrar:
+
+- arquivos `.env` reais (`.env`, `.env.production`, `supabase/functions/.env`…), chaves `.pem`/`.key`;
+- tokens JWT (chaves anon/service_role), chaves `sb_secret_`/`sb_publishable_`, URL real de projeto
+  Supabase, chaves de GitHub/AWS/Google/Stripe/OpenAI, strings de conexão com senha;
+- e-mails pessoais (gmail, hotmail, outlook, uol…);
+- **qualquer valor** dos seus arquivos locais `.env*`, `supabase/functions/.env` e `.segredos-locais` —
+  inclusive o caminho secreto do painel.
+
+`.segredos-locais` (ignorado pelo git) é uma lista sua, uma linha por dado real que nunca pode ir
+para o GitHub: telefone, e-mail, CNPJ, domínio. Para conferir o repositório inteiro: `npm run segredos`.
+
+> Dica: no GitHub, ative também **Settings → Code security → Secret scanning / Push protection**
+> (grátis em repositórios públicos).
+
 ## Colocar no ar
 
 Guia passo a passo para publicar o site. A hospedagem é a **Locaweb compartilhada** (só arquivos
@@ -251,15 +274,18 @@ Os comandos devem ser digitados no terminal, dentro da pasta do projeto.
 ```bash
 npx supabase login
 npx supabase link --project-ref <ref>
-npx supabase db push
+npx supabase db push --remote --include-seed
 ```
 
-O primeiro comando abre o navegador para você entrar. O último cria todas as tabelas.
+O primeiro comando abre o navegador para você entrar. O último cria todas as tabelas na nuvem.
+Na CLI 3.x, sem `--remote` o `db push` vai para o banco **local** (Docker) e não faz nada na nuvem;
+`--include-seed` cria a linha de configuração da empresa (`supabase/seed.sql`), sem a qual o site não
+carrega. Para simular antes, acrescente `--dry-run`.
 
 ### 3. Configurar os segredos das funções
 
 ```bash
-npx supabase secrets set ALLOWED_ORIGINS=https://seudominio.com.br ADMIN_URL=https://seudominio.com.br/painel-x7k2q PUBLIC_SUPABASE_URL=https://<ref>.supabase.co
+npx supabase secrets set ALLOWED_ORIGINS=https://seudominio.com.br ADMIN_URL=https://seudominio.com.br/<seu-caminho-secreto> PUBLIC_SUPABASE_URL=https://<ref>.supabase.co
 ```
 
 - `ALLOWED_ORIGINS`: de onde o site pode falar com as funções (se usar também `www`, separe por
@@ -286,8 +312,8 @@ Em **Authentication** no painel do Supabase:
    sign up** (não existe cadastro de clientes; só o administrador tem conta) e desative **Confirm
    email**.
 2. Em **URL Configuration**: em **Site URL** coloque `https://seudominio.com.br` e, em **Redirect
-   URLs**, adicione `https://seudominio.com.br/painel-x7k2q/nova-senha` (troque pelo seu `VITE_ADMIN_BASE`). Se o
-   seu domínio usa `www`, adicione também `https://www.seudominio.com.br/painel-x7k2q/nova-senha` (a
+   URLs**, adicione `https://seudominio.com.br/<seu-caminho-secreto>/nova-senha` (troque pelo seu `VITE_ADMIN_BASE`). Se o
+   seu domínio usa `www`, adicione também `https://www.seudominio.com.br/<seu-caminho-secreto>/nova-senha` (a
    lista precisa ter cada endereço exato). O caminho escondido do painel aparece aí e no e-mail de
    recuperação; isso é aceitável, pois só o administrador recebe esse e-mail.
 3. Em **Authentication → Rate Limits**, aumente os limites de **sign-in/sign-ups** e de **token
@@ -323,11 +349,13 @@ envio padrão dele é limitado a esses endereços). Antes de abrir o site para c
 
 ```
 VITE_FUNCTIONS_URL=https://<ref>.supabase.co/functions/v1
-VITE_ADMIN_BASE=/painel-x7k2q/
+VITE_ADMIN_BASE=/<seu-caminho-secreto>/
 ```
 
 `VITE_ADMIN_BASE` é a pasta secreta do painel: escolha um nome difícil de adivinhar, com `/` no início
-e no fim (não pode ser só `/`). Guarde esse endereço: ele não aparece em lugar nenhum do site (só nas configurações do Supabase e
+e no fim (não pode ser só `/`), com pelo menos 12 caracteres (ex.: `/adm-` + letras e números aleatórios).
+O build de produção **recusa** os caminhos de exemplo que aparecem neste repositório (ex.: `/painel-exemplo/`),
+porque o repositório é público. Nunca escreva o caminho real em arquivos versionados. Guarde esse endereço: ele não aparece em lugar nenhum do site (só nas configurações do Supabase e
 no e-mail de recuperação de senha do administrador).
 
 2. Gere os dois sites:
@@ -348,13 +376,13 @@ de arquivos ocultos** no programa: o `.htaccess` começa com ponto e precisa ser
 
 - Conteúdo de `dist/loja` (o que está dentro dela, não a pasta) → raiz do site (`public_html`).
 - Conteúdo de `dist/admin` → uma pasta dentro do `public_html` com o nome do `VITE_ADMIN_BASE`
-  (ex.: `public_html/painel-x7k2q/`).
+  (ex.: `public_html/<seu-caminho-secreto>/`).
 
 Confirme que `.htaccess` e `index.html` aparecem nas duas pastas e que a pasta `assets` foi enviada inteira.
 
 ### 10. Primeiro acesso
 
-1. Abra `https://seudominio.com.br/painel-x7k2q/` e entre com o e-mail e a senha do passo 6.
+1. Abra `https://seudominio.com.br/<seu-caminho-secreto>/` e entre com o e-mail e a senha do passo 6.
 2. Em **Configurações**: informe o WhatsApp que receberá os pedidos e envie a logo.
 3. Cadastre as **categorias** e depois os **produtos** (com fotos e variações).
 
@@ -362,7 +390,7 @@ Confirme que `.htaccess` e `index.html` aparecem nas duas pastas e que a pasta `
 
 - [ ] Abrir o site no celular e navegar pelos produtos.
 - [ ] Montar um carrinho, preencher os dados (sem criar conta) e finalizar: o WhatsApp deve abrir com o pedido.
-- [ ] Testar "esqueci minha senha" no painel (`/painel-x7k2q/esqueci-senha`): o e-mail do administrador deve chegar, o link abrir a tela de nova senha do painel, e a nova senha funcionar no login.
+- [ ] Testar "esqueci minha senha" no painel (`/<seu-caminho-secreto>/esqueci-senha`): o e-mail do administrador deve chegar, o link abrir a tela de nova senha do painel, e a nova senha funcionar no login.
 - [ ] Preencher o **e-mail de privacidade** em Configurações (contato LGPD).
 - [ ] Abrir um endereço direto, como `https://seudominio.com.br/carrinho`, e conferir que a página abre.
 - [ ] Conferir o cadeado (HTTPS) e que `http://` redireciona para `https://`.
@@ -410,7 +438,7 @@ Confirme que `.htaccess` e `index.html` aparecem nas duas pastas e que a pasta `
   o conteúdo de `dist/loja` / `dist/admin` por cima dos arquivos antigos.
 - **Mudou alguma função (pasta `supabase/functions`):** `npx supabase functions deploy`.
 - **Mudou o banco (nova migration):** `npx supabase db push`.
-- Antes de publicar, `npm run verificar` roda lint, testes e os dois builds.
+- Antes de publicar, `npm run verificar` roda a verificação de segredos, lint, testes e os dois builds.
 
 ### Problemas comuns
 

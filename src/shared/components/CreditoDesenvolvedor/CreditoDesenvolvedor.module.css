@@ -1,0 +1,16 @@
+.credito {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+}
+
+.link {
+  color: var(--cor-primaria-forte);
+  font-weight: 600;
+}
+
+.link:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: var(--anel-foco);
+}

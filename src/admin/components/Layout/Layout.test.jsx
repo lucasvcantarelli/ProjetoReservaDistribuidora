@@ -5,6 +5,7 @@ import { logarComoAdmin, renderizarAdmin } from '../../../test/renderizarAdmin.j
 import { adminAuthService } from '../../services/adminAuthService.js';
 import { sessaoAdmin } from '../../services/apiAdmin.js';
 import { categoriasService } from '../../services/categoriasService.js';
+import { empresaPublicaService } from '../../services/empresaPublicaService.js';
 
 function abrirPainel(url = '/categorias') {
   logarComoAdmin();
@@ -93,6 +94,34 @@ describe('Layout do painel', () => {
       );
       expect(screen.getByRole('main')).not.toHaveAttribute('inert');
       vi.unstubAllGlobals();
+    });
+  });
+  describe('marca e crédito', () => {
+    it('mostra a logo da empresa no topo quando ela foi enviada', async () => {
+      vi.spyOn(empresaPublicaService, 'obter').mockResolvedValue({
+        nome: 'Reserva Distribuidora',
+        logo_url: 'https://cdn.exemplo/logo.webp',
+      });
+      abrirPainel();
+      const logos = await screen.findAllByRole('img', { name: 'Logo Reserva Distribuidora' });
+      expect(logos[0]).toHaveAttribute('src', 'https://cdn.exemplo/logo.webp');
+    });
+
+    it('sem logo (ou se a leitura falhar) mostra só o texto', async () => {
+      vi.spyOn(empresaPublicaService, 'obter').mockRejectedValue(new Error('sem rede'));
+      abrirPainel();
+      const menu = await screen.findByRole('navigation', { name: 'Menu principal' });
+      expect(menu).toBeInTheDocument();
+      expect(screen.queryByRole('img')).not.toBeInTheDocument();
+      expect(screen.getAllByText('Painel administrativo').length).toBeGreaterThan(0);
+    });
+
+    it('o menu traz "Desenvolvido por CantarelliTech" com link em nova aba', async () => {
+      abrirPainel();
+      const link = await screen.findByRole('link', { name: 'CantarelliTech' });
+      expect(link).toHaveAttribute('href', 'https://www.cantarellitech.com.br');
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
     });
   });
 });

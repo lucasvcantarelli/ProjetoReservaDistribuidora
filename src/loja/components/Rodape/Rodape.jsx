@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEmpresa } from '../../hooks/useEmpresa.js';
 import { formatarWhatsappCompleto, linkDeTeste } from '../../../shared/utils/whatsapp.js';
+import CreditoDesenvolvedor from '../../../shared/components/CreditoDesenvolvedor';
 import estilos from './Rodape.module.css';
 
 export default function Rodape() {
@@ -33,6 +34,7 @@ export default function Rodape() {
         <p className={estilos.direitos}>
           © {ano} {nome}
         </p>
+        <CreditoDesenvolvedor />
       </div>
     </footer>
   );

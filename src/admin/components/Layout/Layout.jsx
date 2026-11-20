@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useMenuMovel } from '../../hooks/useMenuMovel.js';
 import { useSessaoAdmin } from '../../hooks/useSessaoAdmin.js';
 import { IconeMenu } from '../Icones';
+import MarcaPainel from '../MarcaPainel';
 import MenuLateral from '../MenuLateral';
 import estilos from './Layout.module.css';
 
@@ -26,7 +27,7 @@ export default function Layout() {
         >
           <IconeMenu />
         </button>
-        <span className={estilos.titulo}>Painel administrativo</span>
+        <MarcaPainel className={estilos.titulo} />
       </header>
       {aberto && <div className={estilos.fundo} onClick={fechar} aria-hidden="true" />}
       <MenuLateral id={idMenu} aberto={aberto} menuRef={menuRef} onSair={sair} />

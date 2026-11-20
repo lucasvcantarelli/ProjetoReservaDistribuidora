@@ -5,6 +5,23 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Não lançado]
 
+### Marca
+
+- Painel: a logo da empresa (enviada em Configurações) aparece no topo, ao lado de "Painel
+  administrativo" (menu e barra do celular), e troca na hora após um novo envio (`MarcaEmpresaContext`).
+- Crédito "Desenvolvido por CantarelliTech" (link para www.cantarellitech.com.br, nova aba) no
+  rodapé da loja e no pé do menu do painel (`CreditoDesenvolvedor`).
+
+### Segurança
+
+- Repositório público: o caminho de exemplo do painel passou a ser `/painel-exemplo/` (o anterior
+  ficou exposto no primeiro commit). O build de produção recusa caminhos de exemplo/curtos
+  (`exigirCaminhoSecreto`); `npm run verificar` usa o modo `verificacao` com `.env.verificacao` (fictício).
+- Verificador de segredos (`scripts/verificar-segredos.mjs`) rodando no hook `.githooks/pre-commit`
+  (instalado pelo `prepare` do npm) e em `npm run segredos`: bloqueia `.env` reais, chaves/tokens,
+  URL real do Supabase, e-mails pessoais e qualquer valor dos `.env` locais e de `.segredos-locais`.
+- `.gitignore` reforçado (`.env.*`, `supabase/functions/.env.*`, `.segredos-locais`, chaves).
+
 ### Adicionado
 
 - Estrutura inicial do projeto com React, Vite e dois builds independentes (loja e admin).
@@ -208,13 +225,13 @@ Loja e painel administrativo em React, com back-end em Supabase (Postgres, Auth,
 
 - Painel: rotas públicas `/esqueci-senha` e `/nova-senha` (páginas `EsqueciSenha` e `NovaSenha`), link "Esqueci minha senha" na tela de login e componente `TelaPublica`. A nova senha lê o `access_token` do fragmento do link, remove o fragmento da URL na hora (o token fica só na memória do componente), valida a senha com `validarSenha` do domínio e, ao concluir, mostra "Senha alterada. Entre com a nova senha." e volta ao login; link ausente ou inválido leva ao pedido de novo link.
 - `adminAuthService.recuperarSenha` e `definirNovaSenha`; util `lerTokenDeRecuperacao`.
-- Variável `ADMIN_URL` (ex.: `https://seudominio.com.br/painel-x7k2q`) em `supabase/functions/.env.example`; README: segredos, Redirect URLs do Supabase (`/painel-x7k2q/nova-senha`, com e sem `www`) e item no checklist final.
+- Variável `ADMIN_URL` (ex.: `https://seudominio.com.br/painel-exemplo`) em `supabase/functions/.env.example`; README: segredos, Redirect URLs do Supabase (`/painel-exemplo/nova-senha`, com e sem `www`) e item no checklist final.
 
 ### Alterado: recuperação de senha (correção da revisão final)
 
 - `auth-recuperar-senha` envia o link para `ADMIN_URL/nova-senha` (antes `SITE_URL/nova-senha`, tela que não existe mais na loja); sem `ADMIN_URL` registra o erro, não envia e continua respondendo 200 neutro. `SITE_URL` deixou de ser usada pelas funções e saiu do `.env.example` e do README.
 - O envio do e-mail não é mais aguardado (`EdgeRuntime.waitUntil`, ou em segundo plano com erro registrado em log), para que e-mail de admin e de não-admin respondam em tempos parecidos.
-- `supabase/config.toml`: `additional_redirect_urls` aponta para `/painel-x7k2q/nova-senha` do painel local.
+- `supabase/config.toml`: `additional_redirect_urls` aponta para `/painel-exemplo/nova-senha` do painel local.
 - Política de Privacidade: pontuação do item de oposição na lista de direitos.
 
 ### Removido (correção da revisão final)

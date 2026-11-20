@@ -23,4 +23,13 @@ describe('Rodape', () => {
     await screen.findByText(/©/);
     expect(screen.queryByText(/WhatsApp:/)).not.toBeInTheDocument();
   });
+
+  it('mostra "Desenvolvido por CantarelliTech" com link em nova aba', async () => {
+    abrir({});
+    const link = await screen.findByRole('link', { name: 'CantarelliTech' });
+    expect(link).toHaveAttribute('href', 'https://www.cantarellitech.com.br');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(link.closest('p')).toHaveTextContent('Desenvolvido por CantarelliTech');
+  });
 });

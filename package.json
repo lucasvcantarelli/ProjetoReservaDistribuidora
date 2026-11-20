@@ -9,11 +9,14 @@
     "build:loja": "vite build --config vite.loja.config.js",
     "build:admin": "vite build --config vite.admin.config.js",
     "build": "npm run build:loja && npm run build:admin",
-    "verificar": "npm run lint && npm test && npm run build",
+    "build:verificacao": "vite build --config vite.loja.config.js --mode verificacao && vite build --config vite.admin.config.js --mode verificacao",
+    "verificar": "npm run segredos && npm run lint && npm test && npm run build:verificacao",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "segredos": "node scripts/verificar-segredos.mjs --tudo",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "react": "^19.3.1",

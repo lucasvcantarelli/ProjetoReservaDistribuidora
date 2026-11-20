@@ -7,6 +7,11 @@ export default defineConfig({
     environment: 'jsdom',
     globals: false,
     setupFiles: ['./src/test/setup.js'],
-    include: ['vite.*.test.js', 'src/**/*.test.{js,jsx}', 'supabase/**/*.test.js'],
+    include: [
+      'vite.*.test.js',
+      'src/**/*.test.{js,jsx}',
+      'supabase/**/*.test.js',
+      'scripts/**/*.test.js',
+    ],
   },
 });

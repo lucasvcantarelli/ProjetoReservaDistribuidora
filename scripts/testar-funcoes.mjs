@@ -590,7 +590,10 @@ function casosAuth() {
         igual(r.status, 200, `status (${r.texto})`);
         igual(r.json.dados, MSG_RECUPERAR, 'mensagem');
         const texto = await textoDoEmail(email);
-        afirmar(texto.includes('/painel-x7k2q/nova-senha'), 'link sem /painel-x7k2q/nova-senha');
+        afirmar(
+          texto.includes('/painel-exemplo/nova-senha'),
+          'link sem /painel-exemplo/nova-senha',
+        );
       },
     },
     {

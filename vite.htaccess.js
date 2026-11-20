@@ -11,7 +11,7 @@ const MARCA_BASE = '__BASE__';
 export function normalizarAdminBase(valor) {
   const bruto = String(valor ?? '').trim();
   if (!bruto) {
-    throw new Error('VITE_ADMIN_BASE não definido. Use um caminho como /painel-x7k2q/.');
+    throw new Error('VITE_ADMIN_BASE não definido. Use um caminho como /painel-exemplo/.');
   }
   if (/\s/.test(bruto) || bruto.includes('..') || bruto.includes('//')) {
     throw new Error(
@@ -21,7 +21,27 @@ export function normalizarAdminBase(valor) {
   const base = `/${bruto.replace(/^\/+|\/+$/g, '')}/`;
   if (base === '//') {
     throw new Error(
-      'VITE_ADMIN_BASE não pode ser "/": o painel precisa ficar em uma pasta, ex.: /painel-x7k2q/.',
+      'VITE_ADMIN_BASE não pode ser "/": o painel precisa ficar em uma pasta, ex.: /painel-exemplo/.',
+    );
+  }
+  return base;
+}
+
+// Caminhos que aparecem no repositório público (exemplos/documentação): nunca podem ir para produção.
+const CAMINHOS_PUBLICOS = ['/painel-exemplo/', '/painel-x7k2q/', '/admin/', '/painel/'];
+
+// No build de produção o caminho do painel precisa ser secreto: recusa os exemplos públicos
+// e exige um nome longo o bastante para não ser adivinhado.
+export function exigirCaminhoSecreto(base) {
+  if (CAMINHOS_PUBLICOS.includes(base.toLowerCase()) || /[<>]/.test(base)) {
+    throw new Error(
+      `VITE_ADMIN_BASE "${base}" é um exemplo público do repositório. ` +
+        'Defina um caminho só seu em .env.production (ex.: /adm-<letras-e-números-aleatórios>/).',
+    );
+  }
+  if (base.replace(/\//g, '').length < 12) {
+    throw new Error(
+      `VITE_ADMIN_BASE "${base}" é curto demais para ser secreto: use pelo menos 12 caracteres.`,
     );
   }
   return base;

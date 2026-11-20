@@ -18,12 +18,12 @@ describe('RotaAdmin e rotas do painel', () => {
   });
 
   it('com basename, a URL do navegador fica sob o basename e o redirecionamento também', async () => {
-    const roteador = renderizarAdmin('/painel-x7k2q/categorias', { basename: '/painel-x7k2q' });
+    const roteador = renderizarAdmin('/painel-exemplo/categorias', { basename: '/painel-exemplo' });
     expect(await screen.findByRole('heading', { name: 'Entrar' })).toBeInTheDocument();
-    expect(roteador.state.location.pathname).toBe('/painel-x7k2q/entrar');
+    expect(roteador.state.location.pathname).toBe('/painel-exemplo/entrar');
     expect(roteador.state.location.search).toBe('?voltar=/categorias');
     expect(roteador.createHref(roteador.state.location)).toBe(
-      '/painel-x7k2q/entrar?voltar=/categorias',
+      '/painel-exemplo/entrar?voltar=/categorias',
     );
   });
 

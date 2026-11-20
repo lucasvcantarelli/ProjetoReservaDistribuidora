@@ -1,0 +1,3 @@
+#!/bin/sh
+# Bloqueia commits com chaves, .env reais, dados reais ou o caminho secreto do painel.
+node scripts/verificar-segredos.mjs || exit 1

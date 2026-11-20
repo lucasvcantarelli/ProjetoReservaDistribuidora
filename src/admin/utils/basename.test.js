@@ -3,8 +3,8 @@ import { basenameDe } from './basename.js';
 
 describe('basenameDe', () => {
   it('tira a barra final do BASE_URL', () => {
-    expect(basenameDe('/painel-x7k2q/')).toBe('/painel-x7k2q');
-    expect(basenameDe('/painel-x7k2q')).toBe('/painel-x7k2q');
+    expect(basenameDe('/painel-exemplo/')).toBe('/painel-exemplo');
+    expect(basenameDe('/painel-exemplo')).toBe('/painel-exemplo');
   });
 
   it('base raiz vira sem basename', () => {

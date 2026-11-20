@@ -80,6 +80,10 @@
   font-size: 0.85rem;
 }
 
+.credito {
+  padding: 0 var(--espaco-3) var(--espaco-2);
+}
+
 .privacidade:focus-visible {
   outline: none;
   box-shadow: var(--anel-foco);

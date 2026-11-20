@@ -10,3 +10,16 @@ supabase/.branches
 .env.*.local
 
 supabase/functions/.env
+
+# Segredos e dados reais (o repositório é público) — o hook .githooks/pre-commit também bloqueia
+.env.*
+!.env.example
+!.env.production.example
+!.env.verificacao
+supabase/functions/.env.*
+!supabase/functions/.env.example
+.segredos-locais
+*.pem
+*.key
+*.p12
+*.pfx

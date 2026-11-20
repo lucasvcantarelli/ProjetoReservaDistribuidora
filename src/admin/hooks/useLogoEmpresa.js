@@ -9,6 +9,7 @@ import {
   comprimirImagem,
 } from '../utils/comprimirImagem.js';
 import { LADO_MAXIMO_LOGO } from '../utils/configForm.js';
+import { useMarcaEmpresa } from './useMarcaEmpresa.js';
 import { useSessaoExpirada } from './useSessaoExpirada.js';
 
 const ROTA_CONFIGURACOES = '/configuracoes';
@@ -26,6 +27,7 @@ function mensagemSegura(erro) {
 export function useLogoEmpresa(urlInicial) {
   const { mostrar } = useToast();
   const sessaoExpirou = useSessaoExpirada(ROTA_CONFIGURACOES);
+  const { definirLogo } = useMarcaEmpresa();
   const [url, setUrl] = useState(urlInicial);
   const [enviando, setEnviando] = useState(false);
   const [aviso, setAviso] = useState('');
@@ -37,6 +39,7 @@ export function useLogoEmpresa(urlInicial) {
       const blob = await comprimirImagem(arquivo, { ladoMax: LADO_MAXIMO_LOGO });
       const config = await configService.enviarLogo(blob);
       setUrl(config.logo_url);
+      definirLogo(config.logo_url);
       mostrar({ texto: MSG_ENVIADA });
     } catch (erro) {
       if (erro instanceof ErroApi && sessaoExpirou(erro)) return;

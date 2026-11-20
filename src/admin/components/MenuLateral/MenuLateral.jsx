@@ -6,6 +6,8 @@ import {
   IconeProdutos,
   IconeSair,
 } from '../Icones';
+import CreditoDesenvolvedor from '../../../shared/components/CreditoDesenvolvedor';
+import MarcaPainel from '../MarcaPainel';
 import estilos from './MenuLateral.module.css';
 
 const ITENS = [
@@ -19,7 +21,9 @@ const ITENS = [
 export default function MenuLateral({ id, aberto, menuRef, onSair }) {
   return (
     <aside id={id} ref={menuRef} className={`${estilos.menu} ${aberto ? estilos.aberto : ''}`}>
-      <p className={estilos.marca}>Painel administrativo</p>
+      <p className={estilos.marca}>
+        <MarcaPainel />
+      </p>
       <nav aria-label="Menu principal" className={estilos.navegacao}>
         {ITENS.map(({ para, texto, Icone }) => (
           <NavLink
@@ -39,6 +43,7 @@ export default function MenuLateral({ id, aberto, menuRef, onSair }) {
       <Link to="/privacidade" className={estilos.privacidade}>
         Política de Privacidade
       </Link>
+      <CreditoDesenvolvedor className={estilos.credito} />
     </aside>
   );
 }
