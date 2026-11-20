@@ -1,0 +1,15 @@
+.pagina {
+  min-height: 100vh;
+  padding: var(--espaco-4) var(--espaco-3);
+  background: var(--cor-fundo);
+}
+
+.voltar {
+  max-width: 760px;
+  margin: var(--espaco-4) auto 0;
+}
+
+.voltar a {
+  color: var(--cor-primaria-forte);
+  font-weight: 600;
+}

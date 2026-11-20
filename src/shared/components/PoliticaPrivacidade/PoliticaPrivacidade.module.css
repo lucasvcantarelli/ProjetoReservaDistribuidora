@@ -1,0 +1,100 @@
+.politica {
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--cor-texto);
+  line-height: 1.6;
+}
+
+.politica h2 {
+  margin: var(--espaco-4) 0 var(--espaco-2);
+  font-size: 1.25rem;
+  color: var(--cor-primaria-forte);
+  scroll-margin-top: var(--margem-rolagem-topo);
+}
+
+.politica h3 {
+  margin: var(--espaco-3) 0 var(--espaco-1);
+  font-size: 1.05rem;
+}
+
+.politica p,
+.politica ul {
+  margin: 0 0 var(--espaco-3);
+}
+
+.politica ul {
+  padding-left: 1.25rem;
+}
+
+.politica li {
+  margin-bottom: var(--espaco-1);
+}
+
+.politica a {
+  color: var(--cor-primaria-forte);
+}
+
+.titulo {
+  margin: 0 0 var(--espaco-1);
+  font-size: 1.6rem;
+}
+
+.politica .atualizacao {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.sumario {
+  margin: var(--espaco-3) 0;
+  padding: var(--espaco-3);
+  background: var(--cor-fundo-suave);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.sumario ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sumario li {
+  margin: 0;
+  padding: 2px 0;
+}
+
+.rolagem {
+  margin-bottom: var(--espaco-3);
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--espaco-2);
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--cor-borda);
+}
+
+.tabela thead th {
+  background: var(--cor-azul-bebe-claro);
+}
+
+.tabela code {
+  display: block;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.onde {
+  display: block;
+  font-weight: 400;
+  color: var(--cor-texto-suave);
+}

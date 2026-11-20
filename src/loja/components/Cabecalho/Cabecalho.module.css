@@ -1,0 +1,143 @@
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.conteudo {
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 10px var(--espaco-3);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'marca carrinho'
+    'busca busca';
+  align-items: center;
+  gap: 10px var(--espaco-3);
+}
+
+.marca {
+  grid-area: marca;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--altura-toque);
+  text-decoration: none;
+  color: var(--cor-preco);
+  justify-self: start;
+}
+
+.marcaTexto {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.busca {
+  grid-area: busca;
+  position: relative;
+}
+
+.iconeBusca {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  color: var(--cor-texto-suave);
+  pointer-events: none;
+}
+
+.campoBusca {
+  width: 100%;
+  min-height: var(--altura-toque);
+  padding: 0 16px 0 42px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--cor-azul-bebe-claro);
+  color: var(--cor-texto);
+  font: inherit;
+}
+
+.campoBusca::placeholder {
+  color: var(--cor-texto-suave);
+}
+
+.campoBusca:focus-visible {
+  outline: none;
+  background: var(--cor-fundo);
+  border-color: var(--cor-foco);
+  box-shadow: var(--anel-foco);
+}
+
+.acoes {
+  grid-area: carrinho;
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.carrinho {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--altura-toque);
+  height: var(--altura-toque);
+  border-radius: 50%;
+  color: var(--cor-preco);
+  background: var(--cor-azul-bebe-claro);
+}
+
+.carrinho:hover {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.carrinho:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+.selo {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--cor-preco);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  border: 2px solid var(--cor-fundo);
+  box-sizing: content-box;
+}
+
+@media (min-width: 760px) {
+  .conteudo {
+    grid-template-columns: auto minmax(240px, 520px) auto;
+    grid-template-areas: 'marca busca carrinho';
+    justify-content: space-between;
+    padding-block: 14px;
+  }
+
+  .marcaTexto {
+    font-size: 1.4rem;
+  }
+}

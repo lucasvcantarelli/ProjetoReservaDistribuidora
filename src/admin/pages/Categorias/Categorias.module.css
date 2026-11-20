@@ -1,0 +1,13 @@
+.excluir {
+  color: var(--cor-erro);
+}
+
+.excluir:hover:not(:disabled) {
+  background: var(--cor-perigo-fundo);
+}
+
+.falha {
+  display: grid;
+  justify-items: start;
+  gap: var(--espaco-3);
+}

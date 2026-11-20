@@ -1,0 +1,13 @@
+.titulo {
+  margin: 0 0 var(--espaco-3);
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+@media (min-width: 760px) {
+  .titulo {
+    font-size: 2rem;
+    margin-bottom: var(--espaco-4);
+  }
+}

@@ -1,0 +1,12 @@
+.texto {
+  margin: 0 0 var(--espaco-4);
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+}

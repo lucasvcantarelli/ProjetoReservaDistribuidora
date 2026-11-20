@@ -1,0 +1,45 @@
+.seletor {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo);
+  overflow: hidden;
+}
+
+.botao {
+  width: var(--altura-toque);
+  min-height: var(--altura-toque);
+  border: 0;
+  background: var(--cor-fundo-suave);
+  color: var(--cor-preco);
+  font: inherit;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao:hover:not(:disabled) {
+  background: var(--cor-azul-bebe-claro);
+}
+
+.botao:disabled {
+  color: var(--cor-borda);
+  cursor: not-allowed;
+}
+
+.botao:focus-visible,
+.campo:focus-visible {
+  outline: none;
+  box-shadow: inset var(--anel-foco);
+}
+
+.campo {
+  width: 72px;
+  border: 0;
+  text-align: center;
+  font: inherit;
+  font-weight: 700;
+  color: var(--cor-texto);
+  background: transparent;
+}

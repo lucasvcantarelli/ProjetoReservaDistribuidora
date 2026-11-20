@@ -1,0 +1,18 @@
+.formulario {
+  display: grid;
+  gap: var(--espaco-4);
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--altura-toque);
+  font-weight: 600;
+}
+
+.opcao input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--cor-primaria-forte);
+}

@@ -1,0 +1,25 @@
+.aviso {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--raio);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.erro {
+  background: var(--cor-perigo-fundo);
+  color: #9b2c2c;
+  border: 1px solid #f2c4c4;
+}
+
+.sucesso {
+  background: var(--cor-azul-bebe-claro);
+  color: var(--cor-primaria-forte);
+  border: 1px solid var(--cor-primaria);
+}
+
+.alerta {
+  background: #fff6e0;
+  color: #7a4b00;
+  border: 1px solid #f0cf85;
+}

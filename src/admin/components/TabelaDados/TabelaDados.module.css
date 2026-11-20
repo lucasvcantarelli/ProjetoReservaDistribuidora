@@ -1,0 +1,134 @@
+.moldura {
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  box-shadow: var(--sombra-card);
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th {
+  padding: 12px var(--espaco-3);
+  background: var(--cor-fundo-suave);
+  border-bottom: 1px solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.tabela td {
+  padding: 12px var(--espaco-3);
+  border-bottom: 1px solid var(--cor-borda);
+  vertical-align: middle;
+}
+
+.tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.colunaAcoes {
+  text-align: right !important;
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-1);
+}
+
+.vazio {
+  padding: var(--espaco-4);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-grande);
+  background: var(--cor-fundo);
+  text-align: center;
+}
+
+.vazioTitulo {
+  margin: 0 0 var(--espaco-2);
+  font-size: 1.1rem;
+}
+
+.vazioTexto {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.vazioAcao {
+  margin-top: var(--espaco-3);
+}
+
+@media (max-width: 719px) {
+  .moldura {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .tabela,
+  .tabela tbody {
+    display: block;
+  }
+
+  .tabela thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .tabela tr {
+    display: block;
+    margin-bottom: var(--espaco-3);
+    padding: var(--espaco-2) var(--espaco-3);
+    background: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra-card);
+  }
+
+  .tabela td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-3);
+    padding: var(--espaco-2) 0;
+    border-bottom: 1px solid var(--cor-fundo-suave);
+    text-align: right;
+  }
+
+  .tabela td::before {
+    content: attr(data-rotulo);
+    color: var(--cor-texto-suave);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .tabela tbody tr:last-child td {
+    border-bottom: 1px solid var(--cor-fundo-suave);
+  }
+
+  .tabela td:last-child {
+    border-bottom: 0;
+  }
+
+  .tabela td.celulaAcoes::before {
+    content: none;
+  }
+
+  .acoes {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}

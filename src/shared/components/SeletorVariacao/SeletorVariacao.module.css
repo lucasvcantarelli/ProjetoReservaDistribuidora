@@ -1,0 +1,78 @@
+.grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.legenda {
+  padding: 0;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+.opcao {
+  position: relative;
+}
+
+.radio {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: var(--altura-toque);
+  padding: 0 18px;
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo);
+  font-weight: 600;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s;
+}
+
+.check {
+  display: none;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  flex: none;
+}
+
+.radio:hover:not(:checked) + .chip {
+  background: var(--cor-fundo-suave);
+  border-color: var(--cor-primaria-escura);
+}
+
+.radio:checked + .chip {
+  background: var(--cor-primaria-forte);
+  border-color: var(--cor-primaria-forte);
+  color: #fff;
+}
+
+.radio:checked + .chip .check {
+  display: inline-block;
+}
+
+.radio:focus-visible + .chip {
+  box-shadow:
+    0 0 0 2px var(--cor-fundo),
+    0 0 0 4px var(--cor-foco);
+}

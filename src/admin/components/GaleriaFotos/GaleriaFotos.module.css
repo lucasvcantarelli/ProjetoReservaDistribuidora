@@ -1,0 +1,151 @@
+.galeria {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+.dica {
+  margin: 0;
+  padding: var(--espaco-3);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-suave);
+  color: var(--cor-texto-suave);
+}
+
+.zona {
+  display: grid;
+  gap: var(--espaco-1);
+  justify-items: center;
+  padding: var(--espaco-4) var(--espaco-3);
+  border: 2px dashed var(--cor-primaria);
+  border-radius: var(--raio-grande);
+  background: var(--cor-fundo-suave);
+  color: var(--cor-primaria-forte);
+  text-align: center;
+  cursor: pointer;
+}
+
+.zona span {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.zona:focus-within {
+  box-shadow: var(--anel-foco);
+}
+
+.arrastando {
+  background: var(--cor-azul-bebe-claro);
+  border-color: var(--cor-primaria-forte);
+}
+
+.contagem {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.aviso {
+  margin: 0;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio);
+  background: #fff6e0;
+  color: #7a5200;
+  font-size: 0.9rem;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cartao {
+  display: grid;
+  align-content: start;
+  gap: var(--espaco-2);
+  padding: var(--espaco-2);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo);
+}
+
+.moldura {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--raio);
+  overflow: hidden;
+  background: var(--cor-azul-bebe-claro);
+}
+
+.imagem {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.capa {
+  position: absolute;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--cor-primaria-forte);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-1);
+}
+
+.remover {
+  color: var(--cor-erro);
+  padding: 0 var(--espaco-2);
+}
+
+.remover:hover:not(:disabled) {
+  background: var(--cor-perigo-fundo);
+}
+
+.envio {
+  justify-items: start;
+}
+
+.nomeArquivo {
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status,
+.statusErro {
+  margin: 0;
+  font-weight: 700;
+}
+
+.status {
+  color: var(--cor-primaria-forte);
+}
+
+.statusErro {
+  color: var(--cor-erro);
+}
+
+.mensagem {
+  margin: 0;
+  color: var(--cor-erro);
+  font-size: 0.85rem;
+}

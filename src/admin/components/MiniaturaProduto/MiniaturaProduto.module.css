@@ -1,0 +1,15 @@
+.miniatura {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--raio);
+  object-fit: cover;
+  background: var(--cor-azul-bebe-claro);
+  border: 1px solid var(--cor-borda);
+}
+
+.vazia {
+  display: grid;
+  place-items: center;
+  color: var(--cor-primaria-escura);
+}

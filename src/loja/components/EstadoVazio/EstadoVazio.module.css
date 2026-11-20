@@ -1,0 +1,30 @@
+.estado {
+  max-width: 440px;
+  margin: 48px auto;
+  padding: 40px var(--espaco-4);
+  text-align: center;
+  background: var(--cor-fundo-suave);
+  border: 1px dashed var(--cor-primaria);
+  border-radius: var(--raio-grande);
+}
+
+.titulo {
+  margin: 0 0 var(--espaco-2);
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--cor-preco);
+}
+
+.texto {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+.acao {
+  margin-top: var(--espaco-4);
+  display: flex;
+  justify-content: center;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
+}

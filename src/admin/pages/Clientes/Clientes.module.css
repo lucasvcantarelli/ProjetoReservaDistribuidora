@@ -1,0 +1,61 @@
+.busca {
+  margin-bottom: var(--espaco-3);
+}
+
+@media (min-width: 720px) {
+  .busca {
+    max-width: 480px;
+  }
+}
+
+.contador {
+  margin: 0 0 var(--espaco-2);
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.celulaNome {
+  min-width: 130px;
+}
+
+.nome {
+  display: block;
+  font-weight: 600;
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.nome:hover {
+  color: var(--cor-primaria-forte);
+  text-decoration: underline;
+}
+
+.nome:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: var(--anel-foco);
+}
+
+.secundario {
+  display: block;
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+}
+
+.semQuebra {
+  white-space: nowrap;
+}
+
+.verFicha,
+.excluir {
+  padding: 0 var(--espaco-2);
+  white-space: nowrap;
+}
+
+.excluir {
+  color: var(--cor-erro);
+}
+
+.excluir:hover:not(:disabled) {
+  background: var(--cor-perigo-fundo);
+}

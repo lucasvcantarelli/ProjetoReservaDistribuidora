@@ -1,0 +1,29 @@
+.tela {
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  background: var(--cor-fundo-suave);
+}
+
+.marca {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cor-primaria-forte);
+}
+
+.tela > div {
+  width: 100%;
+}
+
+.privacidade {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.privacidade a {
+  color: var(--cor-texto-suave);
+}

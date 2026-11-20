@@ -1,0 +1,18 @@
+.ordem {
+  display: inline-flex;
+  gap: var(--espaco-1);
+}
+
+.seta {
+  padding: 0;
+  width: var(--altura-toque);
+}
+
+.seta[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.seta[aria-disabled='true']:hover {
+  background: transparent;
+}

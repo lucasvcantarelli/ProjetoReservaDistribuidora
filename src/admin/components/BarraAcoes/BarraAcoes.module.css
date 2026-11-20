@@ -1,0 +1,30 @@
+.barra {
+  position: sticky;
+  bottom: var(--altura-aviso-privacidade, 0px);
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+  margin: 0 calc(var(--espaco-3) * -1);
+  padding: var(--espaco-2) var(--espaco-3);
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-fundo);
+  box-shadow: 0 -4px 16px rgba(74, 155, 232, 0.12);
+}
+
+.barra > * {
+  flex: 1;
+}
+
+@media (min-width: 720px) {
+  .barra {
+    margin: 0;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-grande);
+  }
+
+  .barra > * {
+    flex: 0 0 auto;
+    min-width: 140px;
+  }
+}

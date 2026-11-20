@@ -1,0 +1,35 @@
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: 12px var(--espaco-3);
+  background: var(--cor-fundo);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  border-left: 6px solid var(--cor-primaria);
+}
+
+.sucesso {
+  border-left-color: var(--cor-sucesso);
+}
+
+.erro {
+  border-left-color: var(--cor-erro);
+}
+
+.fechar {
+  min-width: 32px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cor-texto-suave);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.fechar:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}

@@ -1,0 +1,46 @@
+.logo {
+  display: grid;
+  gap: var(--espaco-3);
+  align-items: start;
+}
+
+.moldura {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 280px;
+  height: 120px;
+  padding: var(--espaco-2);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-suave);
+}
+
+.imagem {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.vazia {
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.controles {
+  display: grid;
+  justify-items: start;
+  gap: var(--espaco-2);
+}
+
+.dica {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .logo {
+    grid-template-columns: 280px 1fr;
+  }
+}

@@ -1,0 +1,62 @@
+.painel {
+  min-height: 100vh;
+  background: var(--cor-fundo-suave);
+}
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  height: 56px;
+  padding: 0 var(--espaco-2);
+  background: var(--cor-fundo);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.botaoMenu {
+  display: grid;
+  place-items: center;
+  width: var(--altura-toque);
+  height: var(--altura-toque);
+  border: 0;
+  border-radius: var(--raio);
+  background: transparent;
+  color: var(--cor-primaria-forte);
+  cursor: pointer;
+}
+
+.botaoMenu:focus-visible {
+  outline: none;
+  box-shadow: var(--anel-foco);
+}
+
+.titulo {
+  font-weight: 700;
+  color: var(--cor-primaria-forte);
+}
+
+.fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  background: rgba(31, 42, 55, 0.45);
+}
+
+.conteudo {
+  padding: var(--espaco-4) var(--espaco-3);
+}
+
+@media (min-width: 900px) {
+  .barra,
+  .fundo {
+    display: none;
+  }
+
+  .conteudo {
+    margin-left: 272px;
+    padding: var(--espaco-4) 40px;
+  }
+}

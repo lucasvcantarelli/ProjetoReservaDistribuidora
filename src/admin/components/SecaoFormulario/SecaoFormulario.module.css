@@ -1,0 +1,33 @@
+.secao {
+  display: grid;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  background: var(--cor-fundo);
+  box-shadow: var(--sombra-card);
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.numero {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--cor-primaria-forte);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.texto {
+  margin: calc(var(--espaco-2) * -1) 0 0;
+  color: var(--cor-texto-suave);
+}

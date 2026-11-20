@@ -1,0 +1,27 @@
+.caixa {
+  padding: var(--espaco-3);
+  border: 1px solid #f0d58a;
+  border-radius: var(--raio);
+  background: #fff8e1;
+}
+
+.titulo {
+  margin: 0 0 var(--espaco-2);
+  font-size: 1.05rem;
+  color: #7a5a00;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espaco-2);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.95rem;
+}

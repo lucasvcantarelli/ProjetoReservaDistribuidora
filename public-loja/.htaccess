@@ -1,0 +1,40 @@
+# Reserva Distribuidora - configuração do Apache (hospedagem compartilhada).
+# Os campos com sublinhado duplo (origem do Supabase e pasta do site) são preenchidos automaticamente pelo build.
+# Envie este arquivo junto com o resto (ele começa com ponto e pode ficar escondido no FTP).
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase __BASE__
+
+  # Força HTTPS.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Bloqueia arquivos e pastas que começam com ponto (exceto .well-known).
+  RewriteRule (^|/)\.(?!well-known/) - [F,L]
+
+  # Arquivos de /assets/ (com hash): serve se existir, 404 se não (nunca cai no fallback); cache de 1 ano.
+  RewriteRule ^assets/ - [E=CACHE_LONGO:1,L]
+
+  # Qualquer endereço que não seja um arquivo ou pasta real abre a página principal (SPA).
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ __BASE__index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob: __SUPABASE_ORIGIN__; connect-src 'self' __SUPABASE_ORIGIN__; font-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Cache: arquivos de /assets/ (com hash) por 1 ano; a página principal nunca fica em cache.
+  Header set Cache-Control "public, max-age=31536000, immutable" env=CACHE_LONGO
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

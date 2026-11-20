@@ -1,0 +1,19 @@
+.editor {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+.lista {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+.erro {
+  margin: 0;
+  color: var(--cor-erro);
+  font-size: 0.9rem;
+}
+
+.adicionar {
+  justify-self: start;
+}

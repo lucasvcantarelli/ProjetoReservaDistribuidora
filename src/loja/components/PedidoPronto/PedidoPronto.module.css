@@ -1,0 +1,24 @@
+.caixa {
+  display: grid;
+  gap: var(--espaco-2);
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-primaria);
+  border-radius: var(--raio-grande);
+  background: var(--cor-azul-bebe-claro);
+}
+
+.titulo {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--cor-primaria-forte);
+}
+
+.texto {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.botao {
+  min-height: 52px;
+  font-size: 1.05rem;
+}

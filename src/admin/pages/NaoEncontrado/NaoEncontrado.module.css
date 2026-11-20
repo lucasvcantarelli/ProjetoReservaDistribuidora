@@ -1,0 +1,18 @@
+.pagina {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  text-align: center;
+}
+
+.titulo {
+  margin: 0;
+}
+
+.texto {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}

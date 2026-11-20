@@ -1,0 +1,29 @@
+.formulario {
+  display: grid;
+  gap: var(--espaco-4);
+}
+
+.linha {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 480px) {
+  .linha {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.zonaExclusao {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.excluir {
+  color: var(--cor-erro);
+}
+
+.excluir:hover:not(:disabled) {
+  background: var(--cor-perigo-fundo);
+}
