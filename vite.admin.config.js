@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { htmlComoIndex } from './vite.html-como-index.js';
+import { favicon } from './vite.favicon.js';
 import { exigirCaminhoSecreto, htaccess, normalizarAdminBase } from './vite.htaccess.js';
 import { spaDev } from './vite.spa-dev.js';
 
@@ -13,7 +14,7 @@ export default defineConfig(({ command, mode }) => {
   // `npm run verificar` usa o modo "verificacao", que aceita o caminho de exemplo.
   if (command === 'build' && mode === 'production') exigirCaminhoSecreto(base);
   return {
-    plugins: [react(), htmlComoIndex('admin.html'), htaccess(), spaDev('admin.html')],
+    plugins: [react(), htmlComoIndex('admin.html'), htaccess(), favicon(), spaDev('admin.html')],
     base,
     publicDir: 'public-admin',
     build: {

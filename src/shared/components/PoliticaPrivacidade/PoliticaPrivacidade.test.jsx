@@ -52,9 +52,9 @@ describe('PoliticaPrivacidade', () => {
     const sumario = screen.getByRole('navigation', { name: 'Sumário' });
     expect(within(sumario).getAllByRole('link')).toHaveLength(9);
     SECOES.forEach(({ id }) => expect(document.getElementById(id)).not.toBeNull());
-    expect(ULTIMA_ATUALIZACAO.iso).toBe('2026-11-20');
+    expect(ULTIMA_ATUALIZACAO.iso).toBe('2026-11-22');
     expect(screen.getAllByText(/Última atualização:/)[0]).toHaveTextContent(
-      '20 de novembro de 2026',
+      '22 de novembro de 2026',
     );
   });
 
@@ -92,5 +92,13 @@ describe('PoliticaPrivacidade', () => {
     expect(ITENS_ARMAZENAMENTO.map((i) => i.chave).sort()).toEqual([...reais].sort());
     reais.forEach((chave) => expect(screen.getByText(chave)).toBeInTheDocument());
     expect(screen.getByRole('columnheader', { name: 'Por quanto tempo' })).toBeInTheDocument();
+  });
+
+  it('informa que só o CEP vai para o ViaCEP', () => {
+    render(<PoliticaPrivacidade empresa={EMPRESA} />);
+    const item = screen.getByText('ViaCEP').closest('li');
+    expect(item).toHaveTextContent('apenas o CEP');
+    expect(item).toHaveTextContent('endereço IP');
+    expect(item).toHaveTextContent('painel');
   });
 });

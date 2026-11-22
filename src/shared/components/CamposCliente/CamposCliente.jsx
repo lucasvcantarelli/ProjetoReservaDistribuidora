@@ -1,5 +1,6 @@
 import Campo from '../Campo';
 import { formatarCep, formatarTelefone } from '../../utils/formatar.js';
+import { DICA_CEP } from '../../hooks/useEnderecoPorCep.js';
 import { TAMANHO_MAXIMO, UFS } from '../../../../supabase/functions/_shared/domain/cadastro.js';
 import estilos from './CamposCliente.module.css';
 
@@ -7,8 +8,16 @@ const TIPO_COLAGEM = 'insertFromPaste';
 const MASCARAS = { telefone: formatarTelefone, cep: formatarCep };
 
 // Campos de contato e endereço, iguais no cadastro, em "Minha conta" e na edição pelo admin.
-// A razão social (empresa) fica a cargo de quem usa o componente.
-export default function CamposCliente({ valores, erros, onMudar, juridica }) {
+// A razão social (empresa) fica a cargo de quem usa o componente. `onMudarCep`/`statusCep` (opcionais)
+// vêm de useEnderecoPorCep: o CEP digitado preenche o endereço.
+export default function CamposCliente({
+  valores,
+  erros,
+  onMudar,
+  juridica,
+  onMudarCep,
+  statusCep,
+}) {
   function propsDo(nome, label, extras = {}) {
     const mascara = MASCARAS[nome];
     return {
@@ -20,7 +29,9 @@ export default function CamposCliente({ valores, erros, onMudar, juridica }) {
       onChange: (evento) => {
         const { value } = evento.target;
         const colado = evento.nativeEvent?.inputType === TIPO_COLAGEM;
-        onMudar(nome, mascara ? mascara(value, { colado }) : value);
+        const texto = mascara ? mascara(value, { colado }) : value;
+        if (nome === 'cep' && onMudarCep) onMudarCep(texto);
+        else onMudar(nome, texto);
       },
       ...extras,
     };
@@ -43,6 +54,7 @@ export default function CamposCliente({ valores, erros, onMudar, juridica }) {
           {...propsDo('cep', 'CEP', {
             inputMode: 'numeric',
             autoComplete: 'postal-code',
+            dica: DICA_CEP[statusCep ?? 'ocioso'],
           })}
         />
         <Campo {...propsDo('uf', 'UF', { como: 'select', autoComplete: 'address-level1' })}>

@@ -34,3 +34,28 @@ export function linkDeTeste(texto) {
 export function whatsappParaCampo(valor) {
   return formatarTelefone(valor, { colado: true });
 }
+
+// Android: o site pode escolher o aplicativo (WhatsApp ou Business) por um "intent" do Chrome. Sem o
+// aplicativo instalado, o navegador volta para o link wa.me normal. iPhone e computador não permitem.
+const PACOTES = { whatsapp: 'com.whatsapp', business: 'com.whatsapp.w4b' };
+const REGEX_WA_ME = /^https:\/\/wa\.me\/(\d+)(?:\?text=([^#]*))?$/;
+
+// 'https://wa.me/<dígitos>?text=<codificado>' -> { whatsapp, business } (intents) ou null.
+export function linksPorAplicativo(linkWaMe) {
+  const partes = REGEX_WA_ME.exec(linkWaMe ?? '');
+  if (!partes) return null;
+  const [, telefone, texto = ''] = partes;
+  const volta = encodeURIComponent(linkWaMe);
+  const intent = (pacote) =>
+    `intent://send/?phone=${telefone}&text=${texto}` +
+    `#Intent;scheme=whatsapp;package=${pacote};S.browser_fallback_url=${volta};end`;
+  return { whatsapp: intent(PACOTES.whatsapp), business: intent(PACOTES.business) };
+}
+
+// Android num navegador de verdade. Navegadores dentro de apps (WebView, Instagram, Facebook) muitas
+// vezes não abrem intent, então ficam com o botão único do wa.me.
+const NAVEGADOR_DE_APP = /; wv\)|FBAN|FBAV|Instagram/i;
+
+export function ehAndroid(userAgent = globalThis.navigator?.userAgent ?? '') {
+  return /Android/i.test(userAgent) && !NAVEGADOR_DE_APP.test(userAgent);
+}

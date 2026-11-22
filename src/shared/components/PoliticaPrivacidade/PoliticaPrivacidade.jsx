@@ -197,6 +197,12 @@ export default function PoliticaPrivacidade({ empresa = {} }) {
             fora do Brasil, nos termos do contrato de tratamento de dados do próprio fornecedor.
           </li>
           <li>
+            <strong>ViaCEP</strong>: quando você digita um CEP, consultamos esse serviço público
+            para preencher rua, bairro, cidade e UF. O seu navegador envia ao ViaCEP apenas o CEP
+            (e, como em qualquer acesso à internet, o seu endereço IP); nome, telefone e demais
+            dados não são enviados. O mesmo vale quando a empresa cadastra o seu endereço no painel.
+          </li>
+          <li>
             <strong>WhatsApp (Meta)</strong>: quando, e somente quando, você decide enviar o pedido,
             a mensagem segue pelo WhatsApp, que tem a própria política de privacidade.
           </li>

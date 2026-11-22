@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { ErroApi } from '../../../shared/services/api.js';
 import { logarComoAdmin, renderizarAdmin } from '../../../test/renderizarAdmin.jsx';
 import { clientesService } from '../../services/clientesService.js';
+import { cepService } from '../../../shared/services/cepService.js';
 
 const usuario = userEvent.setup({ delay: null });
 
@@ -295,5 +296,29 @@ describe('ClienteForm - ficha', () => {
     await usuario.click(screen.getByRole('button', { name: 'Tentar novamente' }));
     expect(await screen.findByDisplayValue('Maria Silva')).toBeInTheDocument();
     expect(obter).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('ClienteForm - endereço pelo CEP', () => {
+  it('na ficha nova, digitar o CEP preenche o endereço', async () => {
+    vi.spyOn(cepService, 'buscar').mockResolvedValue({
+      rua: 'Rua do Bom Jesus',
+      bairro: 'Recife',
+      cidade: 'Recife',
+      uf: 'PE',
+    });
+    await abrirNovo();
+    await digitar('CEP', '50030170');
+    expect(await screen.findByDisplayValue('Rua do Bom Jesus')).toBeInTheDocument();
+    expect(screen.getByLabelText('CEP')).toHaveValue('50030-170');
+    expect(screen.getByLabelText('Cidade')).toHaveValue('Recife');
+    expect(screen.getByLabelText('UF')).toHaveValue('PE');
+  });
+
+  it('abrir uma ficha existente não busca o CEP nem troca o endereço', async () => {
+    const buscar = vi.spyOn(cepService, 'buscar');
+    await abrir(PF);
+    expect(screen.getByLabelText('Rua')).toHaveValue('Rua A');
+    expect(buscar).not.toHaveBeenCalled();
   });
 });

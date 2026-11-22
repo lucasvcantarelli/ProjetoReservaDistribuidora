@@ -5,6 +5,22 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Não lançado]
 
+### Pedido e cadastro
+
+- CEP preenche rua, bairro, cidade e UF ao ser digitado (finalizar pedido da loja e ficha de
+  clientes do painel), via ViaCEP direto do navegador (`cepService`, `useEnderecoPorCep`). Falha ou
+  CEP inexistente só mostra um aviso; dados lembrados e fichas existentes não são sobrescritos.
+  `connect-src` do CSP libera `https://viacep.com.br`; Política de Privacidade cita o ViaCEP.
+- Android: "Pedido pronto!" deixa escolher entre WhatsApp e WhatsApp Business (intent com volta ao
+  `wa.me` se o app não estiver instalado) e sempre oferece o link comum ("Não abriu?"). iPhone,
+  computador e navegadores dentro de apps (Instagram, Facebook, WebView) seguem com um botão só.
+
+### Favicon
+
+- Loja e painel usam `marca-local/favicon.png` (pasta fora do Git, bloqueada também pelo
+  verificador de segredos) como ícone da aba e `apple-touch-icon` (`vite.favicon.js`). Sem o arquivo,
+  o build segue sem favicon.
+
 ### Marca
 
 - Painel: a logo da empresa (enviada em Configurações) aparece no topo, ao lado de "Painel

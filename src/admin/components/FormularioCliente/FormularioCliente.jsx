@@ -3,6 +3,7 @@ import Botao from '../../../shared/components/Botao';
 import Campo from '../../../shared/components/Campo';
 import SeletorVariacao from '../../../shared/components/SeletorVariacao';
 import { useFocoNoPrimeiroErro } from '../../../shared/hooks/useFocoNoPrimeiroErro.js';
+import { DICA_CEP } from '../../../shared/hooks/useEnderecoPorCep.js';
 import {
   TAMANHO_MAXIMO,
   TIPOS_PESSOA,
@@ -110,6 +111,7 @@ export default function FormularioCliente({ cliente }) {
             autoComplete="off"
             value={valores.cep}
             erro={erros.cep}
+            dica={DICA_CEP[f.statusCep]}
             onChange={(e) => f.mudarCep(e.target.value)}
           />
           <Campo

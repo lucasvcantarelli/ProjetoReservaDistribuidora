@@ -108,7 +108,9 @@ describe('Clientes', () => {
     expect(
       await screen.findByText('Busque por empresa, responsável, documento, telefone ou e-mail'),
     ).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Ver ficha de Bar do João LTDA' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Ver ficha de Bar do João LTDA' }),
+    );
     expect(roteador.state.location.pathname).toBe('/clientes/c2');
   });
 

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ErroApi } from '../../shared/services/api.js';
+import { useEnderecoPorCep } from '../../shared/hooks/useEnderecoPorCep.js';
 import { useFormulario } from '../../shared/hooks/useFormulario.js';
 import { useToast } from '../../shared/hooks/useToast.js';
 import { validarClientePedido } from '../../../supabase/functions/_shared/domain/clientePedido.js';
@@ -63,6 +64,7 @@ export function useFinalizarPedido() {
   const [lembrar, setLembrar] = useState(salvo !== null);
   const identificacao = useFormulario(salvo ?? IDENTIFICACAO_VAZIA);
   const { valores, definirValores, setErros } = identificacao;
+  const cep = useEnderecoPorCep(identificacao.mudar);
 
   const tratarFalha = useCallback(
     (erro) => {
@@ -211,7 +213,14 @@ export function useFinalizarPedido() {
     aviso,
     observacao,
     setObservacao,
-    identificacao: { valores, erros: identificacao.erros, mudar: identificacao.mudar, mudarTipo },
+    identificacao: {
+      valores,
+      erros: identificacao.erros,
+      mudar: identificacao.mudar,
+      mudarTipo,
+      mudarCep: cep.aoMudarCep,
+      statusCep: cep.status,
+    },
     lembrar,
     setLembrar,
     temDadosSalvos,

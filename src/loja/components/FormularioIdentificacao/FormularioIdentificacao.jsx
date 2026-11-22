@@ -12,7 +12,14 @@ const OPCOES_TIPO = [
 
 // Identificação do cliente no pedido: vai só para a mensagem do WhatsApp. Pessoa física não informa
 // documento; empresa informa razão social e CNPJ. `erros` vem com as chaves do formulário.
-export default function FormularioIdentificacao({ valores, erros, onMudar, onMudarTipo }) {
+export default function FormularioIdentificacao({
+  valores,
+  erros,
+  onMudar,
+  onMudarTipo,
+  onMudarCep,
+  statusCep,
+}) {
   const juridica = valores.tipo_pessoa === 'PJ';
 
   return (
@@ -47,7 +54,14 @@ export default function FormularioIdentificacao({ valores, erros, onMudar, onMud
           />
         </>
       )}
-      <CamposCliente valores={valores} erros={erros} onMudar={onMudar} juridica={juridica} />
+      <CamposCliente
+        valores={valores}
+        erros={erros}
+        onMudar={onMudar}
+        juridica={juridica}
+        onMudarCep={onMudarCep}
+        statusCep={statusCep}
+      />
     </fieldset>
   );
 }

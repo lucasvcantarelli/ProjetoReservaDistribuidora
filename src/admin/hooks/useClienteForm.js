@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAvisoSaidaSemSalvar } from '../../shared/hooks/useAvisoSaidaSemSalvar.js';
 import { useConfirm } from '../../shared/hooks/useConfirm.js';
+import { useEnderecoPorCep } from '../../shared/hooks/useEnderecoPorCep.js';
 import { useFormulario } from '../../shared/hooks/useFormulario.js';
 import { useToast } from '../../shared/hooks/useToast.js';
 import { ErroApi } from '../../shared/services/api.js';
@@ -38,6 +39,7 @@ export function useClienteForm(clienteInicial) {
   const sujo = instantaneoCliente(valores) !== instantaneoCliente(inicial);
   const { liberarSaida } = useAvisoSaidaSemSalvar(sujo);
   const juridica = valores.tipo_pessoa === 'PJ';
+  const cep = useEnderecoPorCep(mudar);
 
   // Trocar o tipo troca o documento (CPF e CNPJ não se aproveitam); voltar ao tipo original restaura.
   function mudarTipo(tipo) {
@@ -47,7 +49,7 @@ export function useClienteForm(clienteInicial) {
 
   const mudarDocumento = (texto) =>
     mudar('cpf_cnpj', mascararDocumento(texto, valores.tipo_pessoa));
-  const mudarCep = (texto) => mudar('cep', formatarCep(texto));
+  const mudarCep = (texto) => cep.aoMudarCep(formatarCep(texto));
   const mudarTelefone = (evento) => {
     const colado = evento.nativeEvent?.inputType === TIPO_COLAGEM;
     mudar('telefone', formatarTelefone(evento.target.value, { colado }));
@@ -122,6 +124,7 @@ export function useClienteForm(clienteInicial) {
     mudarTipo,
     mudarDocumento,
     mudarCep,
+    statusCep: cep.status,
     mudarTelefone,
     salvar,
     excluir,

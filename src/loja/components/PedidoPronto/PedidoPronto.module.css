@@ -22,3 +22,14 @@
   min-height: 52px;
   font-size: 1.05rem;
 }
+
+.opcoes {
+  display: grid;
+  gap: var(--espaco-2);
+}
+
+.linkComum {
+  justify-self: center;
+  font-size: 0.95rem;
+  color: var(--cor-primaria-forte);
+}

@@ -55,6 +55,7 @@ const nomeDoArquivo = (caminho) => caminho.split(/[\\/]/).pop();
 export function motivoArquivoProibido(caminho) {
   const nome = nomeDoArquivo(caminho);
   if (/(^|\/)supabase\/\.(temp|branches)\//.test(caminho)) return 'pasta local do Supabase CLI';
+  if (/(^|\/)marca-local\//.test(caminho)) return 'marca do cliente (marca-local/ fica fora do Git)';
   return ARQUIVOS_PROIBIDOS.find((r) => r.teste(nome))?.motivo ?? null;
 }
 

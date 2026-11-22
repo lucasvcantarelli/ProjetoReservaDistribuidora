@@ -358,7 +358,14 @@ O build de produção **recusa** os caminhos de exemplo que aparecem neste repos
 porque o repositório é público. Nunca escreva o caminho real em arquivos versionados. Guarde esse endereço: ele não aparece em lugar nenhum do site (só nas configurações do Supabase e
 no e-mail de recuperação de senha do administrador).
 
-2. Gere os dois sites:
+2. Favicon (ícone da aba do navegador, opcional): salve a imagem da marca como
+   `marca-local/favicon.png` (PNG quadrado, de preferência 512x512, fundo sólido ou transparente).
+   A pasta `marca-local/` fica **fora do Git** (o verificador de segredos também a bloqueia), porque
+   é a marca do cliente. O build copia o arquivo para a loja e para o painel e coloca as tags no
+   HTML. Sem o arquivo, o build segue sem favicon e só avisa. Para trocar, substitua o arquivo, gere
+   de novo e reenvie.
+
+3. Gere os dois sites:
 
 ```bash
 npm install

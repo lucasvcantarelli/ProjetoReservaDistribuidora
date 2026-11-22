@@ -1,5 +1,5 @@
 // Data da última revisão do texto da política. Atualize sempre que o conteúdo mudar.
-export const ULTIMA_ATUALIZACAO = { iso: '2026-11-20', texto: '20 de novembro de 2026' };
+export const ULTIMA_ATUALIZACAO = { iso: '2026-11-22', texto: '22 de novembro de 2026' };
 
 // Tudo o que o site guarda no navegador. As chaves são as reais (os testes conferem com as constantes dos serviços).
 export const ITENS_ARMAZENAMENTO = [

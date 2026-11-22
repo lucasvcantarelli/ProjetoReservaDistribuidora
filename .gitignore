@@ -19,6 +19,7 @@ supabase/functions/.env
 supabase/functions/.env.*
 !supabase/functions/.env.example
 .segredos-locais
+marca-local/
 *.pem
 *.key
 *.p12

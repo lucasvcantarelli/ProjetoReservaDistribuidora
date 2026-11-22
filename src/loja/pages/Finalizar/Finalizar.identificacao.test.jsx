@@ -6,6 +6,7 @@ import { ErroApi } from '../../../shared/services/api.js';
 import { carrinhoService } from '../../services/carrinhoService.js';
 import { CHAVE_DADOS_CLIENTE, dadosClienteService } from '../../services/dadosClienteService.js';
 import { pedidoService } from '../../services/pedidoService.js';
+import { cepService } from '../../../shared/services/cepService.js';
 
 const LINK = 'https://wa.me/5511999999999?text=oi';
 const BOTAO_PREPARAR = 'Preparar pedido';
@@ -98,10 +99,11 @@ describe('Finalizar - identificação do cliente', () => {
       'href',
       LINK,
     );
-    const funcoes = fetchMock.mock.calls.map(([url]) => String(url).split('/').pop());
+    const chamadas = fetchMock.mock.calls.filter(([url]) => !String(url).includes('viacep'));
+    const funcoes = chamadas.map(([url]) => String(url).split('/').pop());
     expect(funcoes).toEqual(['pedido-revisar', 'pedido-whatsapp']);
-    expect(fetchMock.mock.calls.every(([, init]) => !init.headers.Authorization)).toBe(true);
-    const corpoEnviado = JSON.parse(fetchMock.mock.calls[1][1].body);
+    expect(chamadas.every(([, init]) => !init.headers.Authorization)).toBe(true);
+    const corpoEnviado = JSON.parse(chamadas[1][1].body);
     expect(corpoEnviado.cliente).toMatchObject({ tipo_pessoa: 'PF', nome: 'Ana Souza' });
   });
 
@@ -277,5 +279,40 @@ describe('Finalizar - lembrar meus dados', () => {
     expect(screen.getByLabelText('Nome')).toHaveValue('');
     expect(screen.getByLabelText(LEMBRAR)).not.toBeChecked();
     expect(window.localStorage.getItem(CHAVE_DADOS_CLIENTE)).toBeNull();
+  });
+});
+
+describe('Finalizar - endereço pelo CEP', () => {
+  const ENDERECO = { rua: 'Praça da Sé', bairro: 'Sé', cidade: 'São Paulo', uf: 'SP' };
+
+  it('digitar o CEP preenche rua, bairro, cidade e UF, que continuam editáveis', async () => {
+    const buscar = vi.spyOn(cepService, 'buscar').mockResolvedValue(ENDERECO);
+    await abrir();
+    await userEvent.type(screen.getByLabelText('CEP'), '01001000');
+    expect(await screen.findByDisplayValue('Praça da Sé')).toBeInTheDocument();
+    expect(buscar).toHaveBeenCalledWith('01001000');
+    expect(screen.getByLabelText('Bairro')).toHaveValue('Sé');
+    expect(screen.getByLabelText('Cidade')).toHaveValue('São Paulo');
+    expect(screen.getByLabelText('UF')).toHaveValue('SP');
+    await userEvent.clear(screen.getByLabelText('Rua'));
+    await userEvent.type(screen.getByLabelText('Rua'), 'Rua do Carmo');
+    expect(screen.getByLabelText('Rua')).toHaveValue('Rua do Carmo');
+  });
+
+  it('CEP não encontrado avisa e deixa digitar o endereço', async () => {
+    vi.spyOn(cepService, 'buscar').mockResolvedValue(null);
+    await abrir();
+    await userEvent.type(screen.getByLabelText('CEP'), '99999999');
+    expect(
+      await screen.findByText('Não conseguimos buscar o endereço desse CEP. Preencha abaixo.'),
+    ).toBeInTheDocument();
+  });
+
+  it('dados lembrados neste aparelho não disparam a busca nem mudam o endereço', async () => {
+    const buscar = vi.spyOn(cepService, 'buscar').mockResolvedValue(ENDERECO);
+    dadosClienteService.salvar(SALVO_PF);
+    await abrir();
+    expect(screen.getByLabelText('Rua')).toHaveValue('Avenida Paulista');
+    expect(buscar).not.toHaveBeenCalled();
   });
 });

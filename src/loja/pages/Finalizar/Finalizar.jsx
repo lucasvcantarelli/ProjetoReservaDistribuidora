@@ -55,6 +55,8 @@ export default function Finalizar() {
           erros={f.identificacao.erros}
           onMudar={f.identificacao.mudar}
           onMudarTipo={f.identificacao.mudarTipo}
+          onMudarCep={f.identificacao.mudarCep}
+          statusCep={f.identificacao.statusCep}
         />
         <Campo
           label="Observação (opcional)"

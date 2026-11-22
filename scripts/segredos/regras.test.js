@@ -18,6 +18,7 @@ describe('motivoArquivoProibido', () => {
     expect(motivoArquivoProibido('certs/site.pem')).toMatch(/chave/);
     expect(motivoArquivoProibido('.segredos-locais')).toMatch(/dados reais/);
     expect(motivoArquivoProibido('supabase/.temp/project-ref')).toMatch(/Supabase CLI/);
+    expect(motivoArquivoProibido('marca-local/favicon.png')).toMatch(/marca do cliente/);
   });
 
   it('permite os modelos com valores fictícios', () => {
